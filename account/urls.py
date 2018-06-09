@@ -7,6 +7,7 @@ from . import views
 urlpatterns =[
     path('',views.login, name='login'),
     path('register/', views.register, name='register'),
+    path('edit/', views.edit, name='edit'),
 ]
 
 if settings.DEBUG:

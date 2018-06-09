@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>edit Profile</title>
+</head>
+<body>
+    <h1>Edit your account</h1>
+    <p>you can edit your account using the following form</p>
+    <form action="{% url 'edit' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token%}
+        {% for form_field in user_form%}
+            {% if form_field.errors%}
+                <p> {{form_field.errors}}</p>
+            {% endif %}
+                
+                <p>
+                        {{form_field.label}}<br>
+                        {{form_field}} 
+                </p>
+        {% endfor %}
+
+        {% for form_field in profile_form%}
+            {% if form_field.errors%}
+                <p> {{form_field.errors}}</p>
+            {% endif %}
+                
+                <p>
+                        {{form_field.label}}<br>
+                        {{form_field}} 
+                </p>
+        {% endfor %}
+    <p> <input type="submit" value="Save changes"></p>
+
+    </form>
+
+</body>
+</html>

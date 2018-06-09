@@ -8,7 +8,16 @@
 </head>
 <body>
     <h1>SosDvlpr.</h1>
-
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+             <li class="{{message.tag}}">
+                 {{ messages|safe }}
+                 <a href="#" class="close">X</a>
+             </li>
+             {% endfor %}
+        </ul>
+    {% endif %}
     {% if user.is_authenticated %}
     <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
 {% else %}

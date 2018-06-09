@@ -25,7 +25,7 @@ SECRET_KEY = '3=a0!lj*i$p9c##ch9t4nquv0*#ki3avf4=m%a57d-k7zjz3#7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sosdvlpr.io','127.0.0.1',]
 
 
 # Application definition

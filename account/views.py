@@ -1,6 +1,10 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Profile
+from .forms import UserEditFroms, ProfileEditForm
 
 
 def register(request):
@@ -10,7 +14,8 @@ def register(request):
         
         if form.is_valid():
             if form.cleaned_data['password1'] == form.cleaned_data['password2']:
-                form.save()
+                new_user = form.save()
+                profile = Profile.objects.create(user=new_user)
                 username = form.cleaned_data['username']
                 password = form.cleaned_data['password1']
                 user = authenticate(request, username=username, password=password)
@@ -25,3 +30,8 @@ def register(request):
         form = UserCreationForm
     context = {'form':form}
     return render(request,'registration/register.html',context)
+
+
+
+
+

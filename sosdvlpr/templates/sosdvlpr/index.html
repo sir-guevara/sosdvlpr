@@ -12,14 +12,16 @@
         <ul class="messages">
             {% for message in messages %}
              <li class="{{message.tag}}">
-                 {{ messages|safe }}
+                 {{ message|safe }}
                  <a href="#" class="close">X</a>
              </li>
              {% endfor %}
         </ul>
     {% endif %}
     {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+    <h1> <p>Hello {{ user.username }}!</p></h1>
+    <p> Thanks for logging in.</p>
+    <a href="{% url 'logout' %}">Logout</a>
 {% else %}
     <p>Welcome, new user. Please <a href="{% url 'login' %}">login</a> .</p>
 {% endif %}

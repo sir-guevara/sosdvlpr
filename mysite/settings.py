@@ -25,7 +25,7 @@ SECRET_KEY = '3=a0!lj*i$p9c##ch9t4nquv0*#ki3avf4=m%a57d-k7zjz3#7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sosdvlpr.io','127.0.0.1',]
+ALLOWED_HOSTS = ['sosdvlpr.io','127.0.0.1','localhost']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -64,6 +66,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                #==> social auth things
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -102,6 +108,21 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    'social_core.pipeline.social_auth.associate_by_email',
+)
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
@@ -135,8 +156,35 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'index'
+
+
 AUTHENTICATION_BACKENDS = (
 
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
 )
+
+# ==> github <==
+SOCIAL_AUTH_GITHUB_KEY = '809c5ae53130ff8c9d90'
+SOCIAL_AUTH_GITHUB_SECRET = '33019293e5ef37661b93f0cfd5766b1e51da76c4'
+
+# ==> twitter <==
+SOCIAL_AUTH_TWITTER_KEY = 'QiQhdMuhfGC4QrvJh0NjypaOF'
+SOCIAL_AUTH_TWITTER_SECRET = 'inM2Ydy1MgYLOPqJtmNoKrlLs0cQ0Lm7aXWhcfb1yJdNhYk89o'
+
+# ==> facebook <==
+SOCIAL_AUTH_FACEBOOK_KEY = '638174116521665'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '5312dad491f518b1991865703a4419c1'  # App Secret
+
+
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False

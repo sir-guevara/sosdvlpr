@@ -1,55 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    
+{% extends 'base.html' %}
 
-            {% if form.errors %}
-            <p>Your username and password didn't match. Please try again.</p>
-            {% endif %}
-            
-            {% if next %}
-                {% if user.is_authenticated %}
-                <p>Your account doesn't have access to this page. To proceed,
-                please login with an account that has access.</p>
-                {% else %}
-                <p>Please login to see this page.</p>
-                {% endif %}
-            {% endif %}
-            
-            <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            <table>
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.password.label_tag }}</td>
-                <td>{{ form.password }}</td>
-            </tr>
-            </table>
-            
-            <input type="submit" value="login" />
-            <input type="hidden" name="next" value="{{ next }}" />
-            </form>
-            <p><strong>-- OR --</strong></p>
-            <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>
-            <a href="{% url 'social:begin' 'twitter' %}">Login with Twitter</a><br>
-            <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
-            
-            {# Assumes you setup the password_reset view in your URLconf #}
-            <p><a href="{% url 'password_reset' %}">Lost password?</a> || <a href="{% url 'register' %}"> Don't Have an account</a> </p>
+  {% block content%}
+    <div class="container">
+              <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                  <div class="row">
+                    <h2 style="text-align:center">Login with Social Media or Manually</h2>
+                    <div class="vl">
+                      <span class="vl-innertext">or</span>
+                    </div>
+              
+                    <div class="col">
+                      <a href="{% url 'social:begin' 'facebook' %}" class="fb btn">
+                        <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+                      </a>
+                      <a href="{% url 'social:begin' 'twitter' %}" class="twitter btn">
+                        <i class="fa fa-twitter fa-fw"></i> Login with Twitter
+                      </a>
+                      <a href="{% url 'social:begin' 'github' %}" class="github btn">
+                        <i class="fa fa-github fa-fw"></i> Login with GitHub
+                      </a>
+                    </div>
+              
+                    <div class="col">
+                      <div class="hide-md-lg">
+                        <p>Or sign in manually:</p>
+                      </div>
+              
+                      
+                  {% if next %}
+                      {% if user.is_authenticated %}
+                      <p>Your account doesn't have access to this page. To proceed,
+                      please login with an account that has access.</p>
+                      {% else %}
+                      <p>Please login to see this page.</p>
+                      {% endif %}
+                  {% endif %}
+                  
+                  
+                  
+
+                  {{form}}
+
+                  <input type="submit" value="login" />
+                  <input type="hidden" name="next" value="{{ next }}" />
+                 
+                          </div>
+                    
+                        </div>
+                      </form>
+              </div>
+              
+              <div class="bottom-container">
+                <div class="row">
+                  <div class="col">
+                    <a href="{% url 'register' %}" style="color:white" class="btn">Sign up</a>
+                  </div>
+                  <div class="col">
+                    <a href="{% url 'password_reset' %}" style="color:white" class="btn">Forgot password?</a>
+                  </div>
+                </div>
+              </div>
 
             
-        
-
-            
-
-</body>
-</html>
+{% endblock content%}

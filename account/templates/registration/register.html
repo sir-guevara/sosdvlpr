@@ -1,29 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register</title>
-</head>
-<body>
-    <form action="{% url 'register' %}" method="POST">
-      {% csrf_token%}
-        {% for form_field in form%}
-            {% if form_field.errors%}
-                <p> {{form_field.errors}}</p>
-            {% endif %}
+{% extends 'base.html' %}
+
+  {% block content%}
+
+
+  <div class="container">
+        <form method="post" action="{% url 'register' %}">
+          {% csrf_token %}
+            <div class="row">
+              <h2 style="text-align:center">Signup with Social Media or Manually</h2>
+              <div class="vl">
+                <span class="vl-innertext">or</span>
+              </div>
+        
+              <div class="col">
+                  <p> Already have an accoun? 
+                        <a href="{% url 'login' %}" style="color:forestgreen">Login</a>
+                  </p>
+                <a href="{% url 'social:begin' 'facebook' %}" class="fb btn">
+                  <i class="fa fa-facebook fa-fw"></i> Signup with Facebook
+                </a>
+                <a href="{% url 'social:begin' 'twitter' %}" class="twitter btn">
+                  <i class="fa fa-twitter fa-fw"></i> Signup with Twitter
+                </a>
+                <a href="{% url 'social:begin' 'github' %}" class="github btn">
+                  <i class="fa fa-github fa-fw"></i> Signup with GitHub
+                </a>
+              </div>
+        
+              <div class="col">
+                <div class="hide-md-lg">
+                  <p>Or sign in manually:</p>
+                </div>
+        
+                {% csrf_token%}
+                {% for form_field in form%}
+                    {% if form_field.errors%}
+                         {{form_field.errors}}
+                    {% endif %}
+                        
+                        
+                                {{form_field.label}}
+                                {{form_field}} 
+                       
+                {% endfor %}
+            
+            <input type="submit" value="Register" />
+           
+                    </div>
+              
+                  </div>
+                </form>
+        </div>
+        
+        <div class="bottom-container">
+          <div class="row">
                 
-                <p>
-                        {{form_field.label}}<br>
-                        {{form_field}} 
-                </p>
-        {% endfor %}
-    <button>register</button>
-
-
-    </form>
+          </div>
+        </div>
     
-    
-</body>
-</html>
+{% endblock content%}

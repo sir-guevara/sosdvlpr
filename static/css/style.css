@@ -70,11 +70,11 @@ input[type=submit]:hover {
 }
 
 /* Clear floats after the columns */
-.row:after {
+/* .row:after {
   content: "";
   display: table;
   clear: both;
-}
+} */
 
 /* vertical line */
 .vl {
@@ -82,7 +82,7 @@ input[type=submit]:hover {
   left: 50%;
   transform: translate(-50%);
   border: 2px solid #ddd;
-  height: 175px;
+  height: 312px;
 }
 
 /* text inside the vertical line */

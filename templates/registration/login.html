@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
   {% block content%}
-    <div class="container">
+    <div class="container p-4">
               <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
                   <div class="row">
-                    <h2 style="text-align:center">Login with Social Media or Manually</h2>
-                    <div class="vl">
-                      <span class="vl-innertext">or</span>
+                      <div class="p-1">
+                        <div class="vl">
+                          <span class="vl-innertext">or</span>
+                      </div>
                     </div>
-              
                     <div class="col">
                       <a href="{% url 'social:begin' 'facebook' %}" class="fb btn">
                         <i class="fa fa-facebook fa-fw"></i> Login with Facebook
